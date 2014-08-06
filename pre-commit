@@ -1,16 +1,16 @@
 #!/bin/zsh
 
 function do_norminette() {
-       while [ "$#" -ge 2 ]
-       do
-               fds="$2 $fds"
-               sed_expr="${sed_expr} -e 's,$2,${1/,/\,},'"
-               shift 2
-       done
-       real_norm_output=$(norminette ${=NORM_EXTRA_FLAGS} --CheckFilename $fds)
-       norm_status="$?"
-       eval "sed ${sed_expr}" <<<"${real_norm_output}"
-       return ${norm_status}
+    while [ "$#" -ge 2 ]
+    do
+        fds="$2 $fds"
+        sed_expr="${sed_expr} -e 's,$2,${1/,/\,},'"
+        shift 2
+    done
+    real_norm_output=$(norminette ${=NORM_EXTRA_FLAGS} --CheckFilename $fds)
+    norm_status="$?"
+    eval "sed ${sed_expr}" <<<"${real_norm_output}"
+    return ${norm_status}
 }
 
 cmdline=$(git ls-files -s |awk -v 'ORS= ' '
@@ -20,7 +20,7 @@ $4 ~ /.*\.[ch]/ {
 
 
 if ! norm_output=$(eval "do_norminette ${cmdline}") ||
-       grep -qE "^(Error${NORM_WERROR+|Warning})" <<<"${norm_output}"
+    grep -qE "^(Error${NORM_WERROR+|Warning})" <<<"${norm_output}"
 then
 	printf '\e[31m\e[1mCommit annulé : erreur de norme !\e[0m\n'
 	echo "${norm_output}"
