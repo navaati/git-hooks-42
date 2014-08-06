@@ -11,3 +11,6 @@ At the moment the only hook available is a pre-commit hook.
 
 This hook check all .c source files with the norminette. If the norminette detects an error, the commit is cancelled.
 It is thus impossible to commit a file with a norm error.
+
+You can provide additionnal flags to the norminette in the NORM_EXTRA_FLAGS environment variable. Also if you set the NORM_WERROR variable (to wathever)
+the hook will make the commit fail on norminette Warnings in addition to errors.
