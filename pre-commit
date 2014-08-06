@@ -1,0 +1,11 @@
+#!/bin/sh
+
+files=$(git ls-files |grep '.c$')
+norm_output=$(norminette --CheckForbiddenSourceHeader $files)
+
+if /bin/echo -n "${norm_output}" |grep '^Error' >/dev/null
+then
+	printf '\e[31m\e[1mCommit annulé : erreur de norme !\e[0m\n'
+	echo "${norm_output}"
+	exit 1
+fi
