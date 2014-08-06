@@ -1,6 +1,9 @@
 #!/bin/zsh
 
 function do_norminette() {
+    if [ "$#" -lt 2 ]; then
+        return 0;
+    fi		
     while [ "$#" -ge 2 ]
     do
         fds="$2 $fds"
